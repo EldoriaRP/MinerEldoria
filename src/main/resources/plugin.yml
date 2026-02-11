@@ -1,0 +1,5 @@
+name: MinerEldoria
+version: '1.0-SNAPSHOT'
+main: io.github.feliperobertosouz.minerEldoria.MinerEldoria
+api-version: '1.21'
+authors: [ SiegDev ]

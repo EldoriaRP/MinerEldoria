@@ -1,0 +1,8 @@
+enabled: true
+permission: "minerador"
+quantity: 20
+drops:
+  iron:
+    material: IRON_NUGGET
+    weight: 5
+    amount: 2
