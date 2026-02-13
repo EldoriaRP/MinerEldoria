@@ -38,7 +38,7 @@ public class BlockBreakListener implements Listener {
         Player player = event.getPlayer();
         Block block = event.getBlock();
 
-        if(!player.hasPermission(this.Plugin.getPlayerPermission()))
+        if(!player.hasPermission(this.Plugin.getConfigStore().getPermission()))
             return;
 
         if(!ALLOWED.contains(block.getType()))
@@ -51,7 +51,7 @@ public class BlockBreakListener implements Listener {
 
         player.sendMessage("Você já minerou: " + counter);
 
-        if(counter >= this.Plugin.getBlocksQuantity())
+        if(counter >= this.Plugin.getConfigStore().getMinedBlocksQuantity())
         {
             miner.MinedBlocks = 0;
             var table = this.Plugin.getLootTable();

@@ -2,6 +2,7 @@ package io.github.feliperobertosouz.minerEldoria;
 
 import io.github.feliperobertosouz.minerEldoria.commands.ListCommand;
 import io.github.feliperobertosouz.minerEldoria.commands.ReloadCommand;
+import io.github.feliperobertosouz.minerEldoria.entities.ConfigStore;
 import io.github.feliperobertosouz.minerEldoria.listeners.BlockBreakListener;
 import io.github.feliperobertosouz.minerEldoria.entities.LootTable;
 import io.github.feliperobertosouz.minerEldoria.listeners.MenuClickListener;
@@ -16,6 +17,8 @@ public final class MinerEldoria extends JavaPlugin {
 
     private MinerManager MinerManager;
     private LootTable LootTable;
+    private ConfigStore ConfigStore;
+
     private int Quantity = 20;
     private String PlayerPermission = "minerador";
     private boolean Enabled = true;
@@ -70,9 +73,11 @@ public final class MinerEldoria extends JavaPlugin {
     public void loadConfiguration()
     {
         loadLootTable();
-        this.Quantity = getConfig().getInt("quantity",20);
-        this.PlayerPermission = getConfig().getString("permission","minerador");
-        this.Enabled = getConfig().getBoolean("enabled",true);
+        var quantity = getConfig().getInt("quantity",20);
+        var permission = getConfig().getString("permission","minerador");
+        var enabled = getConfig().getBoolean("enabled",true);
+
+        this.ConfigStore = new ConfigStore(permission,quantity);
     }
 
     public LootTable getLootTable()
@@ -80,13 +85,8 @@ public final class MinerEldoria extends JavaPlugin {
         return this.LootTable;
     }
 
-    public String getPlayerPermission()
+    public ConfigStore getConfigStore()
     {
-        return this.PlayerPermission;
-    }
-
-    public int getBlocksQuantity()
-    {
-        return this.Quantity;
+        return this.ConfigStore;
     }
 }
