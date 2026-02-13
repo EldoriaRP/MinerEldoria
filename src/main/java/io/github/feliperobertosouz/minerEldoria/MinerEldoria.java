@@ -25,7 +25,7 @@ public final class MinerEldoria extends JavaPlugin {
         saveDefaultConfig();
 
         loadConfiguration();
-        if(!this.Enabled){
+        if (!this.Enabled) {
             this.getLogger().warning("O plugin esta desativado por meio de configurações, altere no config.yml para habilitar o plugin novamente");
             Bukkit.getPluginManager().disablePlugin(this);
             return;
@@ -33,15 +33,9 @@ public final class MinerEldoria extends JavaPlugin {
 
         this.MinerManager = new MinerManager();
 
-        getServer().getPluginManager().registerEvents(new BlockBreakListener(this.MinerManager, this), this);
-        getServer().getPluginManager().registerEvents(new MenuClickListener(),this);
+        loadListeners();
 
-        BasicCommand reloadCommand = new ReloadCommand(this);
-        registerCommand("minereldoria-reload", reloadCommand);
-
-        BasicCommand listCommand = new ListCommand(this);
-        registerCommand("minereldoria-list", listCommand);
-
+        loadCommands();
 
         this.getLogger().info("PLUGIN INICIADO COM SUCESSO");
     }
@@ -49,6 +43,21 @@ public final class MinerEldoria extends JavaPlugin {
     @Override
     public void onDisable() {
         this.getLogger().info("PLUGIN ENCERRADO COM SUCESSO");
+    }
+
+    public void loadCommands()
+    {
+        BasicCommand reloadCommand = new ReloadCommand(this);
+        registerCommand("minereldoria-reload", reloadCommand);
+
+        BasicCommand listCommand = new ListCommand(this);
+        registerCommand("minereldoria-list", listCommand);
+    }
+
+    public void loadListeners()
+    {
+        getServer().getPluginManager().registerEvents(new BlockBreakListener(this.MinerManager, this), this);
+        getServer().getPluginManager().registerEvents(new MenuClickListener(),this);
     }
 
     public void loadLootTable()
@@ -62,6 +71,8 @@ public final class MinerEldoria extends JavaPlugin {
     {
         loadLootTable();
         this.Quantity = getConfig().getInt("quantity",20);
+        this.PlayerPermission = getConfig().getString("permission","minerador");
+        this.Enabled = getConfig().getBoolean("enabled",true);
     }
 
     public LootTable getLootTable()
