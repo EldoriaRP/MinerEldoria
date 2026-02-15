@@ -4,10 +4,14 @@ public class ConfigStore {
 
     private String permission;
     private int MinedBlocksQuantity;
+    private double BaseChance;
+    private double FairPlayBonus;
 
-    public ConfigStore(String permission, int minedBlocks) {
+    public ConfigStore(String permission, int minedBlocks, double baseChance, double fairPlayBonus) {
         this.permission = permission;
-        MinedBlocksQuantity = minedBlocks;
+        this.MinedBlocksQuantity = minedBlocks;
+        this.BaseChance = baseChance;
+        this.FairPlayBonus = fairPlayBonus;
     }
 
     public String getPermission() {
@@ -17,5 +21,15 @@ public class ConfigStore {
     public int getMinedBlocksQuantity()
     {
         return this.MinedBlocksQuantity;
+    }
+
+    public double getBaseChance()
+    {
+        return this.BaseChance;
+    }
+
+    public double getFairPlayBonus()
+    {
+        return this.FairPlayBonus;
     }
 }

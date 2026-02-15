@@ -1,5 +1,6 @@
 package io.github.feliperobertosouz.minerEldoria;
 
+import io.github.feliperobertosouz.minerEldoria.commands.InfoCommand;
 import io.github.feliperobertosouz.minerEldoria.commands.ListCommand;
 import io.github.feliperobertosouz.minerEldoria.commands.ReloadCommand;
 import io.github.feliperobertosouz.minerEldoria.entities.ConfigStore;
@@ -55,6 +56,9 @@ public final class MinerEldoria extends JavaPlugin {
 
         BasicCommand listCommand = new ListCommand(this);
         registerCommand("minereldoria-list", listCommand);
+
+        BasicCommand infoCommand = new InfoCommand(this);
+        registerCommand("minereldoria-info", infoCommand);
     }
 
     public void loadListeners()
@@ -75,9 +79,11 @@ public final class MinerEldoria extends JavaPlugin {
         loadLootTable();
         var quantity = getConfig().getInt("quantity",20);
         var permission = getConfig().getString("permission","minerador");
+        var baseChance = getConfig().getDouble("baseChance",0.05);
+        var fairPlayBonus = getConfig().getDouble("fairPlayBonus",0.02);
         var enabled = getConfig().getBoolean("enabled",true);
 
-        this.ConfigStore = new ConfigStore(permission,quantity);
+        this.ConfigStore = new ConfigStore(permission,quantity,baseChance,fairPlayBonus);
     }
 
     public LootTable getLootTable()

@@ -49,8 +49,6 @@ public class BlockBreakListener implements Listener {
 
         var counter = miner.MinedBlocks;
 
-        player.sendMessage("Você já minerou: " + counter);
-
         if(counter >= this.Plugin.getConfigStore().getMinedBlocksQuantity())
         {
             miner.MinedBlocks = 0;
