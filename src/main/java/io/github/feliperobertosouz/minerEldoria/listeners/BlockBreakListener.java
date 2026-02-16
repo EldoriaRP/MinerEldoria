@@ -3,7 +3,10 @@ package io.github.feliperobertosouz.minerEldoria.listeners;
 import io.github.feliperobertosouz.minerEldoria.MinerEldoria;
 import io.github.feliperobertosouz.minerEldoria.managers.MinerManager;
 import io.github.feliperobertosouz.minerEldoria.entities.LootTable;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
+import org.bukkit.Particle;
+import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -49,6 +52,8 @@ public class BlockBreakListener implements Listener {
 
         var counter = miner.MinedBlocks;
 
+        MiniMessage mm = MiniMessage.miniMessage();
+
         if(counter >= this.Plugin.getConfigStore().getMinedBlocksQuantity())
         {
             miner.MinedBlocks = 0;
@@ -58,11 +63,26 @@ public class BlockBreakListener implements Listener {
             if (bonus != null)
             {
                 block.getWorld().dropItemNaturally(block.getLocation(), bonus);
+                player.playSound(
+                        player.getLocation(),
+                        Sound.ENTITY_EXPERIENCE_ORB_PICKUP,
+                        1f,
+                        1f
+                );
+                player.sendMessage(mm.deserialize("<b><green>Que sorte!</green> Você encontrou um minério extra."));
 
-                miner.SuccessRate = 0.05;
+                player.spawnParticle(
+                        Particle.END_ROD,
+                        event.getBlock().getLocation().add(0,1,0),
+                        20,
+                        0.3,0.3,0.3,
+                        0.1
+                );
+
+                miner.SuccessRate = this.Plugin.getConfigStore().getBaseChance();
             }
             else{
-                miner.SuccessRate += 0.02;
+                miner.SuccessRate += this.Plugin.getConfigStore().getFairPlayBonus();
                 miner.Fails += 1;
             }
         }
