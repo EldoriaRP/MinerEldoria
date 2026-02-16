@@ -3,6 +3,7 @@ package io.github.feliperobertosouz.minerEldoria.listeners;
 import io.github.feliperobertosouz.minerEldoria.MinerEldoria;
 import io.github.feliperobertosouz.minerEldoria.managers.MinerManager;
 import io.github.feliperobertosouz.minerEldoria.entities.LootTable;
+import net.kyori.adventure.text.minimessage.MiniMessage;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
@@ -51,6 +52,8 @@ public class BlockBreakListener implements Listener {
 
         var counter = miner.MinedBlocks;
 
+        MiniMessage mm = MiniMessage.miniMessage();
+
         if(counter >= this.Plugin.getConfigStore().getMinedBlocksQuantity())
         {
             miner.MinedBlocks = 0;
@@ -66,7 +69,7 @@ public class BlockBreakListener implements Listener {
                         1f,
                         1f
                 );
-                player.sendMessage("§6Que sorte você encontrou um minério extra!");
+                player.sendMessage(mm.deserialize("<b><green>Que sorte!</green> Você encontrou um minério extra."));
 
                 player.spawnParticle(
                         Particle.END_ROD,
